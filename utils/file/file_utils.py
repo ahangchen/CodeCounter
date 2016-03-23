@@ -103,7 +103,7 @@ def get_blank(line):
 
 
 def gen_name(line):
-    return line.strip().replace('- ', '').replace(' ', '_').replace('/', '_')\
+    return line.strip().replace('- ', '').replace(' ', '_').replace('/', '_') \
         .replace(':', '').replace(',', '').replace('(', '_').replace(')', '_')
 
 
@@ -169,6 +169,27 @@ def build_by_summary(summary_path):
     file.close()
     dst_file.close()
 
+
+def read2mem(path):
+    file = open(path)
+    content = ''
+    while 1:
+        try:
+            lines= file.readlines(100)  # 相当于一个缓冲区
+        except UnicodeDecodeError:
+            file.close()
+            continue
+        if not lines:
+            break
+        for line in lines:
+            content += line
+    return content
+
+
+def append2file(path, content):
+    file = open(path, "a+")
+    file.write(content)
+    file.close()
 
 if __name__ == '__main__':
     # print(utils.file.file_utils.code_counter('/media/Software/coding/C++/穿越迷宫/穿越迷宫'))
