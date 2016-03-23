@@ -55,7 +55,7 @@ def get_links():
         os.remove('star.md')
     except FileNotFoundError:
         pass
-    file_utils.append2file('star.md', '#我的收藏\n>他山之石，可以攻玉\n\n开发过程中收藏在Chrome书签栏里的技术文章，独立出来\n\n')
+    file_utils.append2file('star.md', '#我的收藏\n>他山之石，可以攻玉\n\n开发过程中收藏在Chrome书签栏里的技术文章，独立出来\n\n转换方式：')
     for word in hp.links:
         if word[1] == 'h3':
             file_utils.append2file('star.md', '##' + word[0] + '\n\n')
