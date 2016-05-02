@@ -1,8 +1,5 @@
 import http.client
 import logging
-from urllib.request import urlopen
-
-import time
 
 __author__ = 'cwh'
 
@@ -38,18 +35,5 @@ def query_file():
         if response is not None and response.status != 404:
             print('success: 110.65.10.209/uploadfile/201230601030%06d.pdf' % i)
 
+
 # query_file()
-
-
-def url_response_time(url):
-    start = time.time()  # 单位秒
-    resp = urlopen(url)
-    if resp.code == 200:
-        print(resp.read())
-    else:
-        print(resp.code)
-    end = time.time()
-    return end - start
-
-time_cnt = url_response_time("http://222.201.145.237:8888/VideoSvr/Login")
-print(time_cnt)

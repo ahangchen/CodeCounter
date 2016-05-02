@@ -2,14 +2,14 @@ import sqlite3
 
 
 def new_table(db_name, table_name, column_sql):
-    execute(db_name, 'create table ' + table_name + ' (' + column_sql + ')')
+    execute(db_name, 'create table if not exists ' + table_name + ' (' + column_sql + ')')
 
 
 def execute(db_name, sql):
     conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
     cursor.execute(sql)
-    print(cursor.rowcount)
+    # print(cursor.rowcount)
     cursor.close()
     conn.commit()
     conn.close()
@@ -30,11 +30,11 @@ def test_new_table():
 
 
 def test_insert():
-    execute('test.db', 'insert into user (id, name) values (\'1\', \'Michael\')')
+    execute('test.db', 'insert into user (id, name) values (\'3\', \'test1\')')
 
 
 def test_query():
     print(query('test.db', 'select * from user where id=?', ('1',)))
 
-
-test_query()
+if __name__ == '__main__':
+    test_insert()
