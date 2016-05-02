@@ -4,14 +4,14 @@ import time
 __author__ = 'cwh'
 
 
-# 类的方式
-def run_in_background(func):
+# 类的方式, 传递可变参数
+def run_in_background(func, *args):
     class ThreadDemo(threading.Thread):
         def __init__(self):  # 线程构造函数
             threading.Thread.__init__(self)
 
         def run(self):  # 具体的线程运行代码
-            func()
+            func(*args)
 
     ThreadDemo().start()
 
