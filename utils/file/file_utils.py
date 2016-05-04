@@ -175,7 +175,7 @@ def read2mem(path):
     content = ''
     while 1:
         try:
-            lines= file.readlines(100)  # 相当于一个缓冲区
+            lines = file.readlines(100)  # 相当于一个缓冲区
         except UnicodeDecodeError:
             file.close()
             continue
