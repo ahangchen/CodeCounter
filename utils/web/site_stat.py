@@ -15,7 +15,7 @@ urls = ["http://222.201.145.237:8888/VideoSvr/Login",
         "http://222.201.145.237:8888/VideoSvr/LongTime?start=%d-%d-%d-%d-%d-%d&channel=%d&ip=%d.%d.%d.%d&port=%d&sid=%s",
         ]
 
-random_size = 9
+random_size = 20
 
 
 def url_stat(url, test_type):
@@ -99,7 +99,8 @@ def long_cache_stat():
 
 def random_play_back(starts, ends, sid):
     for i in range(random_size):
-        starts.append(datetime.datetime(2016, 4, 29) + datetime.timedelta(seconds=random.randint(0, 345600)))
+        # starts.append(datetime.datetime.now() - datetime.timedelta(seconds=random.randint(0, 345600)))
+        starts.append(datetime.datetime(2016, 4, 30) + datetime.timedelta(seconds=random.randint(0, 8640)))
         ends.append(starts[i] + datetime.timedelta(seconds=15))
     for i in range(random_size):
         run_in_background(url_stat, urls[3] % (starts[i].year, starts[i].month, starts[i].day,
@@ -107,6 +108,7 @@ def random_play_back(starts, ends, sid):
                                                ends[i].year, ends[i].month, ends[i].day,
                                                ends[i].hour, ends[i].minute, ends[i].second, random.randint(2, 4),
                                                125, 216, 231, 164, 37777, sid), "3")
+        time.sleep(0.05)
 
 
 def sample_stat():
@@ -120,7 +122,7 @@ def sample_stat():
     starts = []
     ends = []
     random_play_back(starts, ends, sid)
-    time.sleep(9)
+    time.sleep(15)
 
     # 随机挑一个来回播
     url_stat(urls[5] % (
@@ -131,7 +133,7 @@ def sample_stat():
         random.randint(2, 4), 125, 216, 231, 164, 37777, sid), "3")
     # 点播抓取多个随机视频
     random_play_back(starts, ends, sid)
-    time.sleep(9)
+    time.sleep(15)
     url_stat(urls[2] % sid, "1")
 
 
