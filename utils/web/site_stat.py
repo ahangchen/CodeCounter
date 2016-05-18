@@ -154,38 +154,38 @@ def sample_stat(test_type):
 if __name__ == '__main__':
     prepare()
 
-    for i in range(30):
-        # 会话相关测试
-        session_stat()
-        # 点播
-        play_back_stat()
-
-        # 直播
-        real_play_stat()
-
-        # 回播
-        long_play_stat()
-
-        # 点播缓存测试
-        back_cache_stat()
-
-        # 直播缓存测试
-        real_cache_stat()
-
-        # 回播缓存测试
-        long_cache_stat()
-
-        print_data_set(query_stat_all())
-
-    # 模拟正常流程测试
-    sample_stat("3")
-
-    # 模拟单客户端多次测试
-    for i in range(30):
-        sample_stat("3")
-        print_data_set(query_stat_all())
-        print('range : ' + str(i))
-
+    # for i in range(30):
+    #     # 会话相关测试
+    #     session_stat()
+    #     # 点播
+    #     play_back_stat()
+    #
+    #     # 直播
+    #     real_play_stat()
+    #
+    #     # 回播
+    #     long_play_stat()
+    #
+    #     # 点播缓存测试
+    #     back_cache_stat()
+    #
+    #     # 直播缓存测试
+    #     real_cache_stat()
+    #
+    #     # 回播缓存测试
+    #     long_cache_stat()
+    #
+    #     print_data_set(query_stat_all())
+    #
+    # # 模拟正常流程测试
+    # sample_stat("3")
+    #
+    # # 模拟单客户端多次测试
+    # for i in range(30):
+    #     sample_stat("3")
+    #     print_data_set(query_stat_all())
+    #     print('range : ' + str(i))
+    #
     # 模拟多客户端测试
     for i in range(4):
         run_in_background(sample_stat, "4")

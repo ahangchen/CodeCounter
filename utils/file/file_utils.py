@@ -192,8 +192,8 @@ def append2file(path, content):
     file.close()
 
 if __name__ == '__main__':
-    # print(utils.file.file_utils.code_counter('/media/Software/coding/C++/穿越迷宫/穿越迷宫'))
+    print(code_counter('/media/Software/scut/毕设/附件/代码') + code_counter('/home/cwh/coding/python/CodeCounter'))
     # count = code_counter('/media/Software/coding')
     # special_write(str(count))
     # print(count)
-    build_by_summary('/home/cwh/gitrep/chromium/SUMMARY.md')
+    # build_by_summary('/home/cwh/gitrep/chromium/SUMMARY.md')
