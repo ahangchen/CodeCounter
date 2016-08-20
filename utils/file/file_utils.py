@@ -102,74 +102,6 @@ def get_blank(line):
     return char_count
 
 
-def gen_name(line):
-    return line.strip().replace('- ', '').replace(' ', '_').replace('/', '_') \
-        .replace(':', '').replace(',', '').replace('(', '_').replace(')', '_')
-
-
-def gen_dir_name(names):
-    dir_name = ''
-    for name in names:
-        dir_name += '/' + name
-    return dir_name
-
-
-def build_by_summary(summary_path):
-    file = open(summary_path)
-    dst_file = open(summary_path.replace('SUMMARY.md', 'summary.md'), 'a+')
-    while 1:
-        try:
-            lines = file.readlines(10000)  # 相当于一个缓冲区
-        except UnicodeDecodeError:
-            file.close()
-            # 有的是用GBK的，也是够呛，年轻不懂事
-            file = open(summary_path, 'r', -1, 'gbk')
-            try:
-                lines = file.readlines(10000)
-            except UnicodeDecodeError:
-                print("such a fucking file: %s" % summary_path)
-                continue
-        if not lines:
-            break
-        root_dir = summary_path.replace("/SUMMARY.md", "")
-        tmp_lines = []
-        for line in lines:
-            if '-' in line:
-                tmp_lines.append(line)
-
-        lines = tmp_lines
-        dir_depth = -1
-
-        sub_dir = ''
-
-        for index in range(len(lines)):
-            # 要求子项缩进为两个空格
-            cur_depth = get_blank(lines[index]) / 2
-            if cur_depth <= dir_depth:
-                remove_count = dir_depth - cur_depth + 1
-                names = sub_dir.split('/')
-                tmp_names = []
-                for index2 in range(len(names)):
-                    if index2 < len(names) - remove_count:
-                        tmp_names.append(names[index2])
-
-                names = tmp_names
-                sub_dir = gen_dir_name(names[1:])
-
-            sub_dir += '/' + gen_name(lines[index])
-            dir_depth = cur_depth
-            if index < len(lines) - 1 and cur_depth < get_blank(lines[index + 1]) / 2:
-                os.mkdir(root_dir + sub_dir)
-                os.mknod(root_dir + sub_dir + '/README.md')
-                dst_file.write(
-                    lines[index].replace('- ', '- [').replace('\n', '') + '](%s/README.md)\n' % sub_dir[1:])
-            else:
-                os.mknod(root_dir + sub_dir + '.md')
-                dst_file.write(lines[index].replace('- ', '- [').replace('\n', '') + '](%s.md)\n' % sub_dir[1:])
-    file.close()
-    dst_file.close()
-
-
 def read2mem(path):
     file = open(path)
     content = ''
@@ -192,7 +124,8 @@ def append2file(path, content):
     file.close()
 
 if __name__ == '__main__':
-    print(code_counter('/media/Software/scut/毕设/附件/代码') + code_counter('/home/cwh/coding/python/CodeCounter'))
+    pass
+    # print(utils.file.file_utils.code_counter('/media/Software/coding/C++/穿越迷宫/穿越迷宫'))
     # count = code_counter('/media/Software/coding')
     # special_write(str(count))
     # print(count)
