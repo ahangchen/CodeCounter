@@ -4,7 +4,10 @@ from html.parser import HTMLParser
 from utils.file import file_utils
 
 
-class MyHTMLParser(HTMLParser):
+class LinkParser(HTMLParser):
+    def error(self, message):
+        pass
+
     is_a = False
     is_h3 = False
     links = []
@@ -48,7 +51,7 @@ class MyHTMLParser(HTMLParser):
 
 def get_links():
     html_code = file_utils.read2mem('/home/cwh/Mission/bookmarks_16_3_23.html')
-    hp = MyHTMLParser()
+    hp = LinkParser()
     hp.feed(html_code)
     hp.close()
     try:
@@ -65,4 +68,58 @@ def get_links():
             print('- [' + word[0] + '](' + word[1] + ')\n')
 
 
-get_links()
+# get_links()
+
+class TdParser(HTMLParser):
+    def error(self, message):
+        pass
+
+    is_td = False
+    tds = []
+    cur_tag_key = ''
+    cur_tag_value = ''
+
+    def __init__(self):
+        HTMLParser.__init__(self)
+
+    def handle_starttag(self, tag, attrs):
+        # print "Encountered the beginning of a %s tag" % tag
+        if tag == 'td':
+            self.is_td = True
+            if len(attrs) == 0:
+                pass
+            else:
+                for (variable, value) in attrs:
+                    if variable == "href":
+                        self.cur_tag_value = value
+
+    def handle_data(self, data):
+        if self.is_td:
+            self.cur_tag_key = data
+
+    def handle_endtag(self, tag):
+        if tag == 'td':
+            self.is_td = False
+            if self.cur_tag_key == '' and self.cur_tag_value == '':
+                pass
+            else:
+                self.tds.append([self.cur_tag_key, self.cur_tag_value])
+                self.cur_tag_key = ''
+                self.cur_tag_value = ''
+
+
+def get_tds(src):
+    hp = TdParser()
+    hp.feed(src)
+    hp.close()
+    for word in hp.tds:
+        if '姓名' in word[1] or ' 房间号：' in word[1]:
+            file_utils.append2file('tds.txt', '\n')
+            print(word[1] + '\n')
+
+
+def test_get_tds():
+    html_code = file_utils.read2mem('stu_dom.html')
+    get_tds(html_code)
+
+test_get_tds()
