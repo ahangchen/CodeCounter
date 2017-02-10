@@ -123,8 +123,23 @@ def append2file(path, content):
     file.write(content)
     file.close()
 
+
+def concepts():
+    raw = read2mem('watermelon.md')
+    lines = raw.split('\n')
+    cs = list()
+    for line in lines:
+        words = line.split()
+        if len(words) < 2:
+            continue
+        cs.append({'page': int(words[0]), 'word': words[1]})
+    results = sorted(cs, key=lambda x: x['page'])
+    for result in results:
+        append2file('concept.md', '- Page' + str(result['page']) + ': ' + result['word'] + '\n')
+
+
 if __name__ == '__main__':
-    pass
+    concepts()
     # print(utils.file.file_utils.code_counter('/media/Software/coding/C++/穿越迷宫/穿越迷宫'))
     # count = code_counter('/media/Software/coding')
     # special_write(str(count))
